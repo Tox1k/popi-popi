@@ -1,0 +1,37 @@
+{
+  "name": "Extraterrestrial-Intelligence",
+  "version": "1.0.0",
+  "description": "Extraterrestrial-Intelligence discord bot",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tox1k/Extraterrestrial-Intelligence.git"
+  },
+  "author": "sol",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tox1k/Extraterrestrial-Intelligence/issues"
+  },
+  "homepage": "https://github.com/Tox1k/Extraterrestrial-Intelligence#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "discord.js": "^11.4.2",
+    "nodemon": "^1.19.1",
+    "pastebin-js": "^1.0.2",
+    "sharp": "^0.20.7",
+    "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^3.1.0"
+  }
+}
