@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Tox1k/Extraterrestrial-Intelligence#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "discord.js": "^11.4.2",
     "nodemon": "^1.19.1",
     "pastebin-js": "^1.0.2",
