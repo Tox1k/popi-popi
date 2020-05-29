@@ -23,11 +23,11 @@ const GuildSchema = new Schema({
   },
   users: [
     {
+      _id: false,
       id: {
         type: String,
         required: true,
         unique: true,
-        dropDups: true
       },
       permissionLevel: {
         type: Number,
@@ -40,11 +40,11 @@ const GuildSchema = new Schema({
   ],
   roles: [
     {
+      _id: false,
       id: {
         type: String,
         required: true,
         unique: true,
-        dropDups: true
       },
       permissionLevel: {
         type: Number,
