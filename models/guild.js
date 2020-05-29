@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { ObjectId } = mongoose.Schema.Types
 
-
 const GuildSchema = new Schema({
   id: {
     type: String,
@@ -14,7 +13,7 @@ const GuildSchema = new Schema({
   prefix: {
     type: String,
     required: true,
-    default: "?"
+    default: '?'
   },
   premium: {
     type: Boolean,
@@ -24,10 +23,9 @@ const GuildSchema = new Schema({
   users: [
     {
       _id: false,
-      id: {
+      userId: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
       },
       permissionLevel: {
         type: Number,
@@ -41,10 +39,9 @@ const GuildSchema = new Schema({
   roles: [
     {
       _id: false,
-      id: {
+      roleId: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
       },
       permissionLevel: {
         type: Number,
@@ -59,9 +56,7 @@ const GuildSchema = new Schema({
     {
       name: {
         type: String,
-        required: true,
-        unique: true,
-        dropDups: true
+        required: true
       },
       permissionRequired: {
         type: Number,
@@ -72,8 +67,8 @@ const GuildSchema = new Schema({
       }
     }
   ],
-  channels:[],
-  roleHandler:[
+  channels: [],
+  roleHandler: [
     {
       channelId: {
         type: String,
@@ -83,53 +78,50 @@ const GuildSchema = new Schema({
         type: String,
         require: true
       },
-      reactions:[
+      reactions: [
         {
-          emoji:{
+          emoji: {
             type: String,
             required: true
           },
-          roles:[String]
+          roles: [String]
         }
       ]
     }
   ],
-  games:[String]
+  games: [String]
 })
 
-GuildSchema.statics.findGuild = async function (id) {
-  
-  const guild = await Guild.findOne({id})
+GuildSchema.statics.findGuild = async (id) => {
+  const guild = await Guild.findOne({ id })
   return guild
 }
 
-GuildSchema.statics.permissionUser = async function (guildId, id) {
-  
-  const guild = await Guild.findOne({
-    id: guildId,
-     users:{
-       id
-      }
-  });
+GuildSchema.statics.permissionUser = async (id, userId, permissionLevel) => {
+  const guild = await Guild.findOne({ id })
+  const index = guild.users.findIndex(user => user.userId === userId)
+  if (index === -1) {
+    guild.users.push({ userId, permissionLevel })
+  } else {
+    guild.users[index].permissionLevel = permissionLevel
+  }
+  await guild.save()
+
   return guild
 }
 
 GuildSchema.statics.updatePermissionUser = async function (guildId, user) {
-  
-  const guild = await Guild.updateOne({id: guildId}, {$addToSet: {users: user}});
+  const guild = await Guild.updateOne({ guildId }, { $addToSet: { users: user } })
   return guild
 }
 
 GuildSchema.statics.addPermissionUser = async function (guildId, user) {
-  
-  const guild = await Guild.updateOne({id: guildId}, {$addToSet: {users: user}})
+  const guild = await Guild.updateOne({ guildId }, { $addToSet: { users: user } })
   return guild
 }
 
 GuildSchema.statics.removePermissionUser = async function (guildId, id) {
-  
-
-  const guild = await Guild.updateOne({ id: guildId }, { $pull: { users: { id } }}, { safe: true})
+  const guild = await Guild.updateOne({ guildId }, { $pull: { users: { id } } }, { safe: true })
   // const guild = await Guild.findOne({
   //   id
   // })
@@ -137,7 +129,6 @@ GuildSchema.statics.removePermissionUser = async function (guildId, id) {
 }
 
 GuildSchema.statics.updatePermissionRole = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -145,7 +136,6 @@ GuildSchema.statics.updatePermissionRole = async function (id) {
 }
 
 GuildSchema.statics.removePermissionRole = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -153,7 +143,6 @@ GuildSchema.statics.removePermissionRole = async function (id) {
 }
 
 GuildSchema.statics.updatePrefix = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -161,7 +150,6 @@ GuildSchema.statics.updatePrefix = async function (id) {
 }
 
 GuildSchema.statics.updatePermissionCommand = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -169,7 +157,6 @@ GuildSchema.statics.updatePermissionCommand = async function (id) {
 }
 
 GuildSchema.statics.addGame = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -177,7 +164,6 @@ GuildSchema.statics.addGame = async function (id) {
 }
 
 GuildSchema.statics.removeGame = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -185,7 +171,6 @@ GuildSchema.statics.removeGame = async function (id) {
 }
 
 GuildSchema.statics.addRoleHandler = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -193,7 +178,6 @@ GuildSchema.statics.addRoleHandler = async function (id) {
 }
 
 GuildSchema.statics.removeRoleHandler = async function (id) {
-  
   const guild = await Guild.findOne({
     id
   })
@@ -203,5 +187,5 @@ GuildSchema.statics.removeRoleHandler = async function (id) {
 const Guild = mongoose.model('Guild', GuildSchema)
 
 module.exports = {
-    Guild
+  Guild
 }

@@ -3,22 +3,25 @@ require('./lib/mongoose')
 const client = require('./lib/client')
 
 const { Guild } = require('./models/guild')
+require('./logs')
 
-client.on("guildCreate", async (guild) => {
-    let server = await Guild.findGuild(guild.id)
+client.on('ready', async () => {
+  await require('./loaders').load()
+})
 
-    if(server === null){
-      const newGuild = new Guild({
-        id: guild.id,
-        premium: false
-      })
-      server = await newGuild.save()
-      client.emit('info', () => {return `added guild with id ${guild.id}`})
-    }
-    else{
-      client.emit('info', () => {return `guild ${guild.id} already present in database!`})
-    }
+client.on('guildCreate', async (guild) => {
+  let server = await Guild.findGuild(guild.id)
 
+  if (server === null) {
+    const newGuild = new Guild({
+      id: guild.id,
+      premium: false
+    })
+    server = await newGuild.save()
+    client.emit('info', `added guild with id ${guild.id}`)
+  } else {
+    client.emit('info', `guild ${guild.id} already present in database!`)
+  }
 })
 
 // client.on("guildDelete", async function(guild){
@@ -29,7 +32,4 @@ client.on("guildCreate", async (guild) => {
 
 //   console.log(`removed guild with id: ${guild.id}`)
 // })
-
-require('./loaders')
-require('./logs')
 require('./commands/roles')
