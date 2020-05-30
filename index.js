@@ -1,5 +1,6 @@
 require('./config/config')
 require('./lib/mongoose')
+require('./lib/pastebin')
 const client = require('./lib/client')
 
 const { Guild } = require('./models/guild')
@@ -33,3 +34,4 @@ client.on('guildCreate', async (guild) => {
 //   console.log(`removed guild with id: ${guild.id}`)
 // })
 require('./commands/roles')
+require('./commands/pastebin')

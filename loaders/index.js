@@ -17,17 +17,14 @@ const initServer = async (guild) => {
     const guild = utils.getGuild(guildId)
     const channel = await client.channels.fetch(channelId)
     const message = await channel.messages.fetch(messageId)
-
+    const junkFilterWhitelist = []
     for (const reaction of reactions) {
       const { emoji, roles } = reaction
+      junkFilterWhitelist.push(emoji)
       const filter = (reaction, user) => reaction.emoji.name === emoji && user.id !== client.user.id
-      const junkFilter = (reaction, user) => reaction.emoji.name !== emoji
       message.react(emoji)
 
       const collector = message.createReactionCollector(filter, { time: 0 })
-      const junkCollector = message.createReactionCollector(junkFilter, { time: 0 })
-
-      junkCollector.on('collect', (reaction) => reaction.remove())
 
       collector.on('collect', async (reaction, user) => {
         const member = await guild.members.fetch(user)
@@ -38,6 +35,9 @@ const initServer = async (guild) => {
         }
       })
     }
+    const junkFilter = (reaction, user) => !junkFilterWhitelist.includes(reaction.emoji.name)
+    const junkCollector = message.createReactionCollector(junkFilter, { time: 0 })
+    junkCollector.on('collect', (reaction) => reaction.remove())
   }
 }
 
