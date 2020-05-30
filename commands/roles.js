@@ -23,28 +23,37 @@ const permissionUpdateUser = function (message) {
   // console.log(args.trim())
 
   const re = /[<@]?[&!]?([0-9]{18})>?[' ']+([1-4]{1})/g
-  const [_, id, level] = re.exec(args)
+  const result = re.exec(args)
+  if (result === null) {
+    message.reply('Wrong usage!\n?popi permission user `user_id` `permission_level` ')
+    return
+  }
+  const [_, id, level] = result
   // const user = { id: id, permissionLevel: Number(level) }
   const userId = id
   const permissionLevel = level
 
-  message.reply(`Setting <@!${id}> permission level to \`${level}\`, are you sure?`)
-    .then(async function (msg) {
-      await message.delete()
+  channel.send(`Setting <@!${id}> permission level to \`${level}\`, are you sure?`)
+    .then(async msg => {
+      // message.delete({ timeout: 15000 })
       await msg.react('✔')
       await msg.react('❌')
-      const filter = (reaction, discordUser) => {
-        return (reaction.emoji.name === '✔' || reaction.emoji.name === '❌') && discordUser.id === author.id
+      const filter = (reaction, user) => {
+        return (reaction.emoji.name === '✔' || reaction.emoji.name === '❌') && user.id === author.id
       }
 
       const collector = msg.createReactionCollector(filter, { time: 15000 })
 
       collector.on('collect', async (reaction, reactionCollector) => {
-        await msg.delete()
+        msg.delete({ timeout: 3000 })
         if (reaction.emoji.name === '✔') {
           await Guild.permissionUser(guild.id, userId, permissionLevel)
           channel.send(`<@!${id}> new permission level: \`${level}\``)
+        } else {
+          channel.send('`Aborted`')
+            .then(msg => msg.delete({ timeout: 4000 }))
         }
       })
     })
+    .catch(err => console.log(err))
 }

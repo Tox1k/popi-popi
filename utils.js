@@ -3,7 +3,7 @@ const client = require('./lib/client')
 const pastebin = require('./lib/pastebin')
 
 const getGuild = function (id) {
-  const guild = client.guilds.get(id)
+  const guild = client.guilds.cache.get(id)
   return guild
 }
 const getChannelByName = function (guildId, name) {
@@ -11,13 +11,12 @@ const getChannelByName = function (guildId, name) {
   const channel = guild.channels.find(ch => ch.name === name)
   return channel
 }
-const getChannelById = function (guildId, id) {
-  const guild = getGuild(guildId)
-  const channel = guild.channels.get(id)
+const getChannelById = async function (guildId, id) {
+  const channel = await client.channels.fetch(id)
   return channel
 }
-const getMessageById = function (channel, id) {
-  const message = channel.messages.find(message => message.id === id)
+const getMessageById = async function (channel, id) {
+  const message = await channel.messages.fetch(id)
   return message
 }
 const getRoleByName = function (guildId, name) {
@@ -25,9 +24,9 @@ const getRoleByName = function (guildId, name) {
   const role = guild.roles.find(role => role.name === name)
   return role
 }
-const getRoleById = function (guildId, id) {
+const getRoleById = async function (guildId, id) {
   const guild = getGuild(guildId)
-  const role = guild.roles.find(role => role.id === id)
+  const role = await guild.roles.fetch(id)
   return role
 }
 const getMemberByName = function (guildId, user) {
@@ -35,9 +34,9 @@ const getMemberByName = function (guildId, user) {
   const member = guild.members.find(member => member.user === user)
   return member
 }
-const getMemberById = function (guildId, id) {
+const getMemberById = async function (guildId, id) {
   const guild = getGuild(guildId)
-  const member = guild.members.find(member => member.id === id)
+  const member = await guild.members.fetch(id)
   return member
 }
 const createEmbed = function (data) {

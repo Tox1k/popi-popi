@@ -3,7 +3,7 @@ const client = require('./lib/client')
 client.on('ready', () => {
   console.log('the client becomes ready to start')
   console.log(`I am ready! Logged in as ${client.user.tag}!`)
-  console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`)
+  console.log(`Bot has started, with ${client.users.cache.size} users, in ${client.channels.cache.size} channels of ${client.guilds.cache.size} guilds.`)
 
   client.user.setActivity('popi-dev')
   client.user.setStatus('Online')
@@ -11,7 +11,7 @@ client.on('ready', () => {
   client.generateInvite(['ADMINISTRATOR'])
     .then(link => {
       console.log(`Generated bot invite link: ${link}`)
-      inviteLink = link
+      // inviteLink = link
     })
 })
 
