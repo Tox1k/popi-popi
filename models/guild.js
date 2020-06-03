@@ -89,7 +89,12 @@ const GuildSchema = new Schema({
       ]
     }
   ],
-  games: [String]
+  games: [
+    {
+      name: { type: String },
+      roleId: { type: String }
+    }
+  ]
 })
 
 GuildSchema.statics.findGuild = async (id) => {

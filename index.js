@@ -33,5 +33,6 @@ client.on('guildCreate', async (guild) => {
 
 //   console.log(`removed guild with id: ${guild.id}`)
 // })
+require('./commands/filter')
 require('./commands/roles')
 require('./commands/pastebin')

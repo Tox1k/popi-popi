@@ -3,18 +3,22 @@ const client = require('../lib/client')
 const utils = require('../utils')
 
 const load = async () => {
+  // console.log(client.guilds)
   for await (const guild of Guild.find()) {
     initServer(guild)
   }
+  // console.log(client.guilds)
 }
 
-const initServer = async (guild) => {
-  const { roleHandler } = guild
-  const guildId = guild.id
+const initServer = async (guildDoc) => {
+  const { roleHandler, prefix } = guildDoc
+  const guildId = guildDoc.id
+  const guild = utils.getGuild(guildId)
+  guild.prefix = prefix
+  client.guilds.cache.set(guildId, guild)
 
   for (const item of roleHandler) {
     const { channelId, messageId, reactions } = item
-    const guild = utils.getGuild(guildId)
     const channel = await client.channels.fetch(channelId)
     const message = await channel.messages.fetch(messageId)
     const junkFilterWhitelist = []

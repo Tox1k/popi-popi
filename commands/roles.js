@@ -6,11 +6,7 @@ const { Guild } = require('../models/guild')
 
 const { VerifyChannel } = require('../models/verify_channel')
 
-client.on('message', async message => {
-  if (message.author === client.user) return
-  if (message.system) return
-  if (message.guild === null) return
-
+client.on('command', async message => {
   const { content } = message
   if (content.startsWith('?popi permission user')) {
     permissionUpdateUser(message)
