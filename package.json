@@ -25,7 +25,7 @@
     "discord.js": "^12.2.0",
     "mongoose": "^5.9.14",
     "nodemon": "^2.0.4",
-    "pastebin-js": "git+https://github.com/Tox1k/pastebin-js.git",
+    "pastebin-js": "^1.0.5",
     "utf8": "^3.0.0"
   },
   "devDependencies": {
