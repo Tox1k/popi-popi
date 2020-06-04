@@ -23,7 +23,7 @@
     "@discordjs/opus": "^0.3.2",
     "axios": "^0.18.1",
     "discord.js": "^12.2.0",
-    "mongoose": "^5.9.14",
+    "mongoose": "^5.9.17",
     "nodemon": "^2.0.4",
     "pastebin-js": "^1.0.5",
     "utf8": "^3.0.0"
