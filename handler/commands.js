@@ -14,7 +14,7 @@ module.exports = (client) => {
         client.commands.set(pull.name, pull)
         table.addRow(file, '✅')
       } else {
-        table.addRow(file, '❌ -> missing something??')
+        table.addRow(file, '❌')
         continue
       }
 
@@ -24,5 +24,4 @@ module.exports = (client) => {
     }
   })
   console.log(table.toString())
-  console.log(client.aliases)
 }

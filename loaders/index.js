@@ -15,7 +15,7 @@ const initServer = async (guildDoc) => {
   const guildId = guildDoc.id
   const guild = utils.getGuild(guildId)
   guild.prefix = prefix
-  client.guilds.cache.set(guildId, guild)
+  // client.guilds.cache.set(guildId, guild)
 
   for (const item of roleHandler) {
     const { channelId, messageId, reactions } = item

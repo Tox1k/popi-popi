@@ -8,15 +8,14 @@ module.exports = {
   description: 'change prefix for the server',
   usage: '`newPrefix`',
   run: async (client, message, args) => {
-    console.log(args)
     if (args.length !== 1 || !Array.isArray(args)) {
       return message.channel.send('invalid arguments!')
     }
 
     const oldPrefix = message.guild.prefix
-    const newPrefix = args
+    const newPrefix = args[0]
 
-    return message.channel.send(`changing prefix from \`${oldPrefix}\` to \`${newPrefix}\``)
+    return message.channel.send(`change prefix from \`${oldPrefix}\` to \`${newPrefix}\`?`)
       .then(async msg => {
       // message.delete({ timeout: 15000 })
         await msg.react('✔')
@@ -31,6 +30,7 @@ module.exports = {
           msg.delete({ timeout: 3000 })
           if (reaction.emoji.name === '✔') {
             await Guild.changePrefix(message.guild.id, newPrefix)
+            message.guild.prefix = newPrefix
             message.channel.send(`Prefix changed!\n\`${oldPrefix}\` => \`${newPrefix}\``)
           } else {
             message.channel.send('`Aborted`')
