@@ -1,7 +1,7 @@
 {
-  "name": "Extraterrestrial-Intelligence",
-  "version": "1.0.0",
-  "description": "Extraterrestrial-Intelligence discord bot",
+  "name": "popi-popi",
+  "version": "2.0.0",
+  "description": "popi popi Discord Bot",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tox1k/Extraterrestrial-Intelligence.git"
+    "url": "git+https://github.com/Tox1k/popi-popi.git"
   },
   "author": "sol",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Tox1k/Extraterrestrial-Intelligence/issues"
+    "url": "https://github.com/Tox1k/popi-popi.git/issues"
   },
-  "homepage": "https://github.com/Tox1k/Extraterrestrial-Intelligence#readme",
+  "homepage": "https://github.com/Tox1k/popi-popi.git#readme",
   "dependencies": {
     "@discordjs/opus": "^0.3.2",
     "axios": "^0.18.1",
