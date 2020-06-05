@@ -6,7 +6,11 @@ const client = require('./lib/client')
 const { Guild } = require('./models/guild')
 
 client.on('ready', async () => {
-  await require('./loaders').load()
+  try {
+    await require('./loaders').load()
+  } catch (err) {
+    client.emit('error', err)
+  }
 })
 
 client.on('guildCreate', async (guild) => {

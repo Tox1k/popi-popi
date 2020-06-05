@@ -103,13 +103,15 @@ GuildSchema.statics.findGuild = async (id) => {
 }
 
 GuildSchema.statics.changePrefix = async (guildId, prefix) => {
-  const guild = await Guild.findGuild(guildId)
+  const guild = await Guild.findOne({ id: guildId })
+  if (!guild) return
   guild.prefix = prefix
   return await guild.save()
 }
 
 GuildSchema.statics.permissionUser = async (id, userId, permissionLevel) => {
   const guild = await Guild.findOne({ id })
+  if (!guild) return
   const index = guild.users.findIndex(user => user.userId === userId)
   if (index === -1) {
     guild.users.push({ userId, permissionLevel })
@@ -139,17 +141,35 @@ GuildSchema.statics.removePermissionUser = async function (guildId, id) {
   return guild
 }
 
-GuildSchema.statics.updatePermissionRole = async function (id) {
-  const guild = await Guild.findOne({
-    id
-  })
+GuildSchema.statics.permissionRole = async (id, roleId, permissionLevel) => {
+  const guild = await Guild.findOne({ id })
+  if (!guild) return
+  const index = guild.roles.findIndex(role => role.roleId === roleId)
+  if (index === -1) {
+    guild.roles.push({ roleId, permissionLevel })
+  } else {
+    guild.roles[index].permissionLevel = permissionLevel
+  }
+  await guild.save()
+
   return guild
 }
 
-GuildSchema.statics.removePermissionRole = async function (id) {
-  const guild = await Guild.findOne({
-    id
-  })
+GuildSchema.statics.updatePermissionRole = async function (guildId, role) {
+  const guild = await Guild.updateOne({ guildId }, { $addToSet: { roles: role } })
+  return guild
+}
+
+GuildSchema.statics.addPermissionRole = async function (guildId, role) {
+  const guild = await Guild.updateOne({ guildId }, { $addToSet: { roles: role } })
+  return guild
+}
+
+GuildSchema.statics.removePermissionRole = async function (guildId, id) {
+  const guild = await Guild.updateOne({ guildId }, { $pull: { roles: { id } } }, { safe: true })
+  // const guild = await Guild.findOne({
+  //   id
+  // })
   return guild
 }
 

@@ -4,7 +4,7 @@ module.exports = {
   name: 'prefix',
   aliases: [],
   category: 'moderation',
-  defaultPermission: 3,
+  defaultPermission: 4,
   description: 'change prefix for the server',
   usage: '`newPrefix`',
   run: async (client, message, args) => {

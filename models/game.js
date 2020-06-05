@@ -3,8 +3,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { ObjectId } = mongoose.Schema.Types
 
-
-const gameSchema = new Schema({
+const GameSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -13,7 +12,7 @@ const gameSchema = new Schema({
   },
   uri: {
     type: String,
-    required: true,
+    required: true
   },
   matchmaking: {
     type: Boolean,
@@ -23,7 +22,7 @@ const gameSchema = new Schema({
 })
 
 GameSchema.statics.findGame = async function (name) {
-  const game = await Game.findOne({name})
+  const game = await Game.findOne({ name })
   return game
 }
 

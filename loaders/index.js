@@ -5,7 +5,7 @@ const utils = require('../utils')
 const load = async () => {
   // console.log(client.guilds)
   for await (const guild of Guild.find()) {
-    initServer(guild)
+    await initServer(guild)
   }
   // console.log(client.guilds)
 }

@@ -1,4 +1,5 @@
 const pastebin = require('../../lib/pastebin')
+
 module.exports = {
   name: 'pastebin',
   aliases: ['paste', 'pb'],
