@@ -102,6 +102,12 @@ GuildSchema.statics.findGuild = async (id) => {
   return guild
 }
 
+GuildSchema.statics.changePrefix = async (guildId, prefix) => {
+  const guild = await Guild.findGuild(guildId)
+  guild.prefix = prefix
+  return await guild.save()
+}
+
 GuildSchema.statics.permissionUser = async (id, userId, permissionLevel) => {
   const guild = await Guild.findOne({ id })
   const index = guild.users.findIndex(user => user.userId === userId)
