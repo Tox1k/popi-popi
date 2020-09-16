@@ -24,7 +24,7 @@ module.exports = {
               client.emit('error', `unable to parse embed with pastebin ID -> ${pastebinId}`)
               return message.channel.send('invalid embed format!')
             }
-            return message.channel.send({ embed: data })
+            return message.channel.send({ content: data.content , embed: data.embed })
           })
           .fail(msg => {
             client.emit('error', msg)
