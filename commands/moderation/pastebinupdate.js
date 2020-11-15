@@ -1,6 +1,5 @@
 const pastebin = require('../../lib/pastebin')
-const { getMessageById } = require('../../utils')
-require('../../utils')
+const utils = require('../../utils')
 
 module.exports = {
   name: 'pastebinupdate',
@@ -16,7 +15,7 @@ module.exports = {
 
     const [channelId, messageId, type, pastebinId] = args
 
-    messageToEdit = await getMessageByIdAndChannelId(channelId, messageId)
+    messageToEdit = await utils.getMessageByIdAndChannelId(channelId, messageId)
     if(!messageToEdit){
         return message.channel.send('message not found!')
     }
