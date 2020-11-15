@@ -19,6 +19,12 @@ const getMessageById = async function (channel, id) {
   const message = await channel.messages.fetch(id)
   return message
 }
+
+const getMessageByIdAndChannelId = async function (channel, id) {
+  const message = await channel.messages.fetch(id)
+  return message
+}
+
 const getRoleByName = function (guildId, name) {
   const guild = getGuild(guildId)
   const role = guild.roles.find(role => role.name === name)
@@ -57,5 +63,6 @@ module.exports = {
   getMemberByName,
   getMemberById,
   createEmbed,
-  createReactionCollector
+  createReactionCollector,
+  getMessageByIdAndChannelId
 }

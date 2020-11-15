@@ -1,18 +1,25 @@
 const pastebin = require('../../lib/pastebin')
+const { getMessageById } = require('../../utils')
+require('../../utils')
 
 module.exports = {
-  name: 'pastebin',
-  aliases: ['paste', 'pb'],
+  name: 'pastebinupdate',
+  aliases: ['pasteu', 'pbu'],
   category: 'moderation',
   defaultPermission: 3,
-  description: 'Send an embed or a message from pastebin',
-  usage: '`embed | message` `pastebinId`',
+  description: 'Update an embed or a message from pastebin',
+  usage: '`channel id` `message id` `embed | message` `pastebinId`',
   run: async (client, message, args) => {
-    if (args.length !== 2 || !Array.isArray(args)) {
+    if (args.length !== 4 || !Array.isArray(args)) {
       return message.channel.send('invalid arguments!')
     }
 
-    const [type, pastebinId] = args
+    const [channelId, messageId, type, pastebinId] = args
+
+    messageToEdit = await getMessageByIdAndChannelId(channelId, messageId)
+    if(!messageToEdit){
+        return message.channel.send('message not found!')
+    }
 
     switch (type.toLowerCase()) {
       case 'embed':
@@ -24,7 +31,7 @@ module.exports = {
               client.emit('error', `unable to parse embed with pastebin ID -> ${pastebinId}`)
               return message.channel.send('invalid embed format!')
             }
-            return message.channel.send({ content: data.content , embed: data.embed })
+            return messageToEdit.edit({ content: data.content , embed: data.embed })
           })
           .fail(msg => {
             client.emit('error', msg)
@@ -33,7 +40,7 @@ module.exports = {
 
       case 'message':
         return await pastebin.getPaste(pastebinId)
-          .then(data => message.channel.send(data))
+          .then(data => messageToEdit.edit(data))
           .fail(msg => {
             client.emit('error', msg)
             return message.channel.send('message not found, check providen ID or document permissions!')
