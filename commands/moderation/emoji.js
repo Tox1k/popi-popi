@@ -1,4 +1,3 @@
-const pastebin = require('../../lib/pastebin')
 
 module.exports = {
   name: 'emoji',

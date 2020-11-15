@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
 const client = require('./lib/client')
-const pastebin = require('./lib/pastebin')
+// const pastebin = require('./lib/pastebin')
 
 const getGuild = function (id) {
   const guild = client.guilds.cache.get(id)
@@ -11,7 +11,7 @@ const getChannelByName = function (guildId, name) {
   const channel = guild.channels.find(ch => ch.name === name)
   return channel
 }
-const getChannelById = async function (guildId, id) {
+const getChannelById = async function (id) {
   const channel = await client.channels.fetch(id)
   return channel
 }
@@ -20,8 +20,9 @@ const getMessageById = async function (channel, id) {
   return message
 }
 
-const getMessageByIdAndChannelId = async function (channel, id) {
-  const message = await channel.messages.fetch(id)
+const getMessageByIdAndChannelId = async function (channelId, messageId) {
+  const channel = await getChannelById(channelId)
+  const message = await channel.messages.fetch(messageId)
   return message
 }
 

@@ -42,6 +42,11 @@ client.on('info', (info) => {
 client.on('invalidated', (info) => {
   console.log(`[SESSION INVALIDATED] - ${info}`)
 })
+
 client.on('ratelimit', (info) => {
   console.log(`[REACHED RATE LIMIT] - ${info}`)
+})
+
+client.on('message', (msg) => {
+  console.log(`[#${msg.channel.name}] ${msg.author.username} -> ${msg.content}`)
 })

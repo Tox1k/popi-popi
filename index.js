@@ -3,6 +3,11 @@ require('./lib/mongoose')
 require('./lib/pastebin')
 const client = require('./lib/client')
 
+const handlers = ['commands']
+handlers.forEach(handler => {
+  require(`./handler/${handler}`)(client)
+})
+
 const { Guild } = require('./models/guild')
 
 client.on('ready', async () => {

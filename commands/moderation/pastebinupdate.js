@@ -15,9 +15,9 @@ module.exports = {
 
     const [channelId, messageId, type, pastebinId] = args
 
-    messageToEdit = await utils.getMessageByIdAndChannelId(channelId, messageId)
-    if(!messageToEdit){
-        return message.channel.send('message not found!')
+    const messageToEdit = await utils.getMessageByIdAndChannelId(channelId, messageId)
+    if (!messageToEdit) {
+      return message.channel.send('message not found!')
     }
 
     switch (type.toLowerCase()) {
@@ -30,7 +30,7 @@ module.exports = {
               client.emit('error', `unable to parse embed with pastebin ID -> ${pastebinId}`)
               return message.channel.send('invalid embed format!')
             }
-            return messageToEdit.edit({ content: data.content , embed: data.embed })
+            return messageToEdit.edit({ content: data.content, embed: data.embed })
           })
           .fail(msg => {
             client.emit('error', msg)
