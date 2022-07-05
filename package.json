@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Tox1k/popi-popi.git#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.3.2",
+    "@discordjs/opus": "^0.8.0",
     "ascii-table": "0.0.9",
     "axios": "^0.18.1",
     "discord.js": "^12.2.0",
